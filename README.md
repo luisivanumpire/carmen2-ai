@@ -69,7 +69,10 @@ carmen1-ai/
 ├── data/                    # PDFs y embeddings
 ├── www/index.html           # Interfaz de usuario
 ├── start.sh / stop.sh       # Scripts de control
+└── LICENSE
+└── README.md
 └── requirements.txt
+
 ```
 
 ---
