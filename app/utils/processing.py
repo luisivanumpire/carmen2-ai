@@ -134,3 +134,4 @@ def buscar_chunks_relevantes(embeddings, query_texto, chunks, modelo_embeddings,
         return [chunks[i] for i in buscar_similares_faiss(query_embedding, top_k)]
     else:
         return [chunks[i] for i in buscar_similares_coseno(embeddings, query_embedding, top_k)]
+
