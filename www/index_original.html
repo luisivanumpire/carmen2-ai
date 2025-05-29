@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>IA Privada - Prompt / Docs-IA</title>
+  <style>
+    body { font-family: Arial, sans-serif; max-width: 800px; margin: 2rem auto; padding: 1rem; }
+    .modo { font-weight: bold; margin-right: 1rem; cursor: pointer; }
+    .activo { text-decoration: underline; color: red; }
+    textarea, button, input[type=file] { width: 100%; margin: 1rem 0; padding: 0.5rem; }
+    .resultado { background: #f0f0f0; padding: 1rem; border-radius: 5px; white-space: pre-wrap; }
+    #panel-archivos { margin-top: 1rem; }
+    .oculto { display: none; }
+  </style>
+</head>
+<body>
+  <div>
+    <span id="modoPrompt" class="modo activo" onclick="cambiarModo('prompt')">Prompt</span>
+    <span id="modoDocs" class="modo" onclick="cambiarModo('docs')">Docs-ia</span>
+  </div>
+
+  <div id="descripcion"></div>
+
+  <div id="panel-archivos" class="oculto">
+    <input type="file" id="pdfFile" accept="application/pdf">
+    <button onclick="enviarPDF()">Adicionar archivos</button>
+    <button onclick="eliminarArchivos()">Eliminar archivos</button>
+  </div>
+
+  <textarea id="prompt" rows="4" placeholder="Escribe tu pregunta..." disabled></textarea>
+  <button onclick="enviarPregunta()" id="btnEnviar" disabled>Enviar</button>
+
+  <h3>🤖 Respuesta</h3>
+  <div class="resultado" id="respuesta"></div>
+
+  <script>
+    const BACKEND_URL = window.location.hostname === "localhost"
+      ? "http://localhost:5001"
+      : `http://${window.location.hostname}:5001`;
+
+    let modo = 'prompt';
+    let hayDocs = false;
+
+    async function verificarEstadoDocs() {
+      const res = await fetch(`${BACKEND_URL}/api/docs_status`);
+      const data = await res.json();
+      hayDocs = data.disponible;
+      document.getElementById("prompt").disabled = (modo === 'docs' && !hayDocs);
+      document.getElementById("btnEnviar").disabled = (modo === 'docs' && !hayDocs);
+      document.getElementById("descripcion").textContent =
+        modo === 'prompt'
+          ? "Pregunta a la IA privada"
+          : hayDocs ? "Pregunta y la IA usará los documentos para responder" : "Debe insertar documentos para usar este modo.";
+    }
+
+    function cambiarModo(nuevoModo) {
+      modo = nuevoModo;
+      document.getElementById("modoPrompt").classList.toggle("activo", modo === 'prompt');
+      document.getElementById("modoDocs").classList.toggle("activo", modo === 'docs');
+      document.getElementById("panel-archivos").classList.toggle("oculto", modo !== 'docs');
+      verificarEstadoDocs();
+    }
+
+    async function enviarPDF() {
+      const input = document.getElementById("pdfFile");
+      if (!input.files.length) return alert("Selecciona un PDF primero.");
+      const formData = new FormData();
+      formData.append("file", input.files[0]);
+
+      const res = await fetch(`${BACKEND_URL}/api/upload_docs`, { method: "POST", body: formData });
+      const data = await res.json();
+      alert("Documento procesado correctamente.");
+      verificarEstadoDocs();
+    }
+
+    async function eliminarArchivos() {
+      await fetch(`${BACKEND_URL}/api/delete_docs`, { method: "DELETE" });
+      alert("Archivos eliminados.");
+      verificarEstadoDocs();
+    }
+
+    async function enviarPregunta() {
+      const prompt = document.getElementById("prompt").value.trim();
+      if (!prompt) return alert("Escribe una pregunta.");
+
+      const endpoint = modo === 'prompt' ? "/api/chat_prompt" : "/api/chat_docs";
+
+      const res = await fetch(`${BACKEND_URL}${endpoint}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ pregunta: prompt })
+      });
+
+      const data = await res.json();
+      document.getElementById("respuesta").textContent = data.respuesta || "(Sin respuesta)";
+    }
+
+    window.onload = verificarEstadoDocs;
+  </script>
+</body>
+</html>
+
