@@ -186,7 +186,7 @@
                       <div class="btn-group">
 						
 						<span class="spinner-border spinner-border-sm text-primary align-middle mr-2 d-none" role="status" aria-hidden="true" data-upload-spinner></span>
-						<i class="fas fa-check-circle text-success d-none" data-upload-success></i>
+						<i class="fas fa-check-circle text-success d-none" data-upload-success style="padding-top: 10px; padding-right: 10px;"></i>
 						<i class="fas fa-times-circle text-danger d-none" data-upload-error></i>
 
                         <button class="btn btn-primary start">
@@ -369,13 +369,6 @@
     // Hookup the start button
     file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
   })
-
-  myDropzone.on("success", function(file, response) {
-  console.log("✅ Subida exitosa:", file.name);
-  console.log("📥 Respuesta del servidor:", response);
-
-  // Aquí puedes actualizar tu base de datos local, una tabla, o mostrar un mensaje al usuario
-});
 
 myDropzone.on("sending", function(file) {
   const spinner = file.previewElement.querySelector("[data-upload-spinner]");
