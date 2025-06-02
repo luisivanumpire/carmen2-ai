@@ -21,7 +21,7 @@ else
 fi
 
 # Abrir navegador si no está abierto
-if ! xdg-open http://localhost:8080 2>/dev/null; then
+if ! xdg-open http://192.168.1.213:8080 2>/dev/null; then
     echo "🔗 Abre manualmente http://localhost:8080"
 fi
 

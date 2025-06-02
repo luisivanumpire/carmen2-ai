@@ -1,0 +1,11 @@
+{
+  "peru_ficha_pais.pdf": {
+    "resumen": "La información proporcionada parece ser un extracto de una página web oficial de la Embajada de España en Lima, Perú. En ella se mencionan varios servicios y recursos disponibles para los ciudadanos españoles que deseen visitar o vivir en Perú.\n\nEntre los servicios incluidos están:\n\n* Atención al público (horarios y teléfonos de atención)\n* Asistencia a detenidos (sección de atenciones especiales)\n* Registro civil y notaría\n* Servicio diplomático comercial e inmigratorio\n\nTambién se mencionan varios centros y oficinas que ofrecen asistencia económica, laboral y cultural. Algunos de estos centros son:\n\n* Consulado General de España en Lima\n* Oficina Económica y Comercial\n* Centro Cultural de España en Santa Beatriz\n* Dirección General de Comunicación, Diplomacia Pública y Redes\n\nEs importante tener en cuenta que la información puede cambiar, por lo que es recomendable verificar la página web oficial de la Embajada de España en Lima para obtener los detalles más actualizados sobre sus servicios y recursos.",
+    "etiquetas": [
+      "perú",
+      "españa",
+      "cooperación"
+    ],
+    "fuente_etiquetas": "tf-idf"
+  }
+}
