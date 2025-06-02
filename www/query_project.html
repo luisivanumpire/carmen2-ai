@@ -239,7 +239,7 @@
       const prompt = document.getElementById("prompt").value.trim();
       if (!prompt) return alert("Escribe una pregunta.");
 
-      const res = await fetch(`${BACKEND_URL}/api/chat_prompt`, {
+      const res = await fetch(`${BACKEND_URL}/api/chat_docs`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ pregunta: prompt })
