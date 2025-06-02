@@ -151,7 +151,7 @@
                 <!-- /.card-tools -->
               </div>
               <!-- /.card-header -->
-              <div id="respuesta" class="card-body">
+              <div id="respuesta" class="card-body" style="white-space: pre-wrap;">
 				
               </div>
               <!-- /.card-body -->
@@ -236,7 +236,7 @@
       ? "http://192.168.1.213:5001"
       : `http://${window.location.hostname}:5001`;
 
-    async function enviarPregunta() {
+	  async function enviarPregunta() {
       const prompt = document.getElementById("prompt").value.trim();
       if (!prompt) return alert("Escribe una pregunta.");
 
