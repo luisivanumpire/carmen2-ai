@@ -222,6 +222,9 @@
                     </div>
                     <div class="col-auto d-flex align-items-center">
                       <div class="btn-group">
+						
+						<span class="spinner-border spinner-border-sm text-primary align-middle mr-2 d-none" role="status" aria-hidden="true" data-upload-spinner></span>
+
                         <button class="btn btn-primary start">
                           <i class="fas fa-upload"></i>
                           <span>Start</span>
@@ -408,8 +411,24 @@
   console.log("📥 Respuesta del servidor:", response);
 
   // Aquí puedes actualizar tu base de datos local, una tabla, o mostrar un mensaje al usuario
-	});
+});
 
+ myDropzone.on("sending", function(file) {
+   const spinner = file.previewElement.querySelector("[data-upload-spinner]");
+   if (spinner) spinner.classList.remove("d-none");
+
+   file.previewElement.querySelector(".start").setAttribute("disabled", "disabled");
+  });
+
+  myDropzone.on("success", function(file, response) {
+	const spinner = file.previewElement.querySelector("[data-upload-spinner]");
+	if (spinner) spinner.classList.add("d-none");
+  });
+
+  myDropzone.on("error", function(file) {
+	const spinner = file.previewElement.querySelector("[data-upload-spinner]");
+	if (spinner) spinner.classList.add("d-none");
+  });
   // Update the total progress bar
   myDropzone.on("totaluploadprogress", function(progress) {
     document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
