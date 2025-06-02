@@ -403,6 +403,13 @@
     file.previewElement.querySelector(".start").onclick = function() { myDropzone.enqueueFile(file) }
   })
 
+  myDropzone.on("success", function(file, response) {
+  console.log("✅ Subida exitosa:", file.name);
+  console.log("📥 Respuesta del servidor:", response);
+
+  // Aquí puedes actualizar tu base de datos local, una tabla, o mostrar un mensaje al usuario
+	});
+
   // Update the total progress bar
   myDropzone.on("totaluploadprogress", function(progress) {
     document.querySelector("#total-progress .progress-bar").style.width = progress + "%"
